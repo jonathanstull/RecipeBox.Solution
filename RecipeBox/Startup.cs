@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ToDoList.Models;
+using RecipeBox.Models;
 
-namespace ToDoList
+namespace RecipeBox
 {
   public class Startup
   {
@@ -26,11 +26,11 @@ namespace ToDoList
       services.AddMvc();
 
       services.AddEntityFrameworkMySql()
-        .AddDbContext<ToDoListContext>(options => options
+        .AddDbContext<RecipeBoxContext>(options => options
         .UseMySql(Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(Configuration["ConnectionStrings:DefaultConnection"])));
 
       services.AddIdentity<ApplicationUser, IdentityRole>()
-          .AddEntityFrameworkStores<ToDoListContext>()
+          .AddEntityFrameworkStores<RecipeBoxContext>()
           .AddDefaultTokenProviders();
           
       services.Configure<IdentityOptions>(options =>
