@@ -24,7 +24,7 @@ namespace RecipeBox.Controllers
     }
     public async Task<ActionResult> Index()
     {
-      var userId = this._userManager.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
       var userIngredients = _db.Ingredients.Where(entry => entry.User.Id == currentUser.Id).ToList();
       return View(userIngredients);
@@ -44,7 +44,7 @@ namespace RecipeBox.Controllers
         _db.SaveChanges();
         if (RecipeId != 0)
         {
-            _db.RecipeIngredient.Add(new IngredientRecipe() { RecipeId = RecipeId, IngredientId = ingredient.IngredientId });
+            _db.IngredientRecipes.Add(new IngredientRecipe() { RecipeId = RecipeId, IngredientId = ingredient.IngredientId });
         }
         _db.SaveChanges();
         return RedirectToAction("Index");
@@ -68,7 +68,7 @@ namespace RecipeBox.Controllers
     {
       if (RecipeId != 0)
       {
-        _db.IngredientRecipe.Add(new IngredientRecipe() {RecipeId = RecipeId, IngredientId = ingredient.IngredientId});
+        _db.IngredientRecipes.Add(new IngredientRecipe() {RecipeId = RecipeId, IngredientId = ingredient.IngredientId});
       }
       _db.Entry(ingredient).State = EntityState.Modified;
       _db.SaveChanges();

@@ -18,7 +18,7 @@ namespace RecipeBox.Controllers
     private readonly UserManager<ApplicationUser> _userManager;
     public RatingsController(UserManager<ApplicationUser> userManager, RecipeBoxContext db)
     {
-        _userManager = userManager;
+      _userManager = userManager;
       _db = db;
     }
       public async Task<ActionResult> Index()
@@ -59,15 +59,15 @@ public async Task<ActionResult> Create(Rating rating, int RecipeId)
      public ActionResult Edit(int id)
     {
       var thisRating = _db.Ratings.FirstOrDefault(rating => rating.RatingId == id);
-      ViewBag.RecipeId = new SelectList(_db.recipes, "RecipeId", "Title");
+      ViewBag.RecipeId = new SelectList(_db.Recipes, "RecipeId", "Title");
       return View(thisRating);
     }
      [HttpPost]
-    public ActionResult Edit(Rating rating, int CategoryId)
+    public ActionResult Edit(Rating rating, int RecipeId)
     {
       if (RecipeId != 0)
       {
-        _db.RecipeRating.Add(new RecipeRating() { CategoryId = CategoryId, RatingId = rating.RatingId });
+        _db.RatingRecipes.Add(new RatingRecipe() { RecipeId = RecipeId, RatingId = rating.RatingId });
       }
       _db.Entry(rating).State = EntityState.Modified;
       _db.SaveChanges();
@@ -105,7 +105,7 @@ public async Task<ActionResult> Create(Rating rating, int RecipeId)
         [HttpPost]
     public ActionResult DeleteRecipe(int joinId)
     {
-      var joinEntry = _db.RatingRecipes.FirstOrDefault(entry => entry.RatingRecipesId == joinId);
+      var joinEntry = _db.RatingRecipes.FirstOrDefault(entry => entry.RatingRecipeId == joinId);
       _db.RatingRecipes.Remove(joinEntry);
       _db.SaveChanges();
       return RedirectToAction("Index");

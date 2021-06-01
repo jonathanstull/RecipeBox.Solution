@@ -11,6 +11,8 @@ namespace RecipeBox.Models
     {
       this.JoinRR = new HashSet<RatingRecipe>();
     }
+
     public virtual ICollection<RatingRecipe> JoinRR { get; }
+    public virtual ApplicationUser User { get; set; }
   }
 }

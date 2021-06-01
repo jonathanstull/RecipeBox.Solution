@@ -24,9 +24,9 @@ namespace RecipeBox.Controllers
 
     public async Task<ActionResult> Index()
     {
-      var userId = this._userManager.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
-      var userItems = _db.Recipes.Where(entry => entry.User.Id == currentUser.Id).ToList();
+      var userRecipes = _db.Recipes.Where(entry => entry.User.Id == currentUser.Id).ToList();
       return View(userRecipes);
     }
 
@@ -48,9 +48,9 @@ namespace RecipeBox.Controllers
       _db.SaveChanges();
       if (IngredientId1 != 0 && IngredientId2 != 0 && IngredientId3 != 0)
       {
-        _db.IngredientRecipe.Add(new IngredientRecipe() { IngredientId = IngredientId1, RecipeId = recipe.RecipeId });
-        _db.IngredientRecipe.Add(new IngredientRecipe() { IngredientId = IngredientId2, RecipeId = recipe.RecipeId });
-        _db.IngredientRecipe.Add(new IngredientRecipe() { IngredientId = IngredientId3, RecipeId = recipe.RecipeId });
+        _db.IngredientRecipes.Add(new IngredientRecipe() { IngredientId = IngredientId1, RecipeId = recipe.RecipeId });
+        _db.IngredientRecipes.Add(new IngredientRecipe() { IngredientId = IngredientId2, RecipeId = recipe.RecipeId });
+        _db.IngredientRecipes.Add(new IngredientRecipe() { IngredientId = IngredientId3, RecipeId = recipe.RecipeId });
       }
       _db.SaveChanges();
       return RedirectToAction("Index");
@@ -66,10 +66,10 @@ namespace RecipeBox.Controllers
       recipe.User = currentUser;
       _db.Recipes.Add(recipe);
       _db.SaveChanges();
-      if (IngredientId1 != 0 && IngredientId2 != 0 && IngredientId3 != 0)
+      if (IngredientId1 != 0 && IngredientId2 != 0)
       {
-        _db.IngredientRecipe.Add(new IngredientRecipe() { IngredientId = IngredientId1, RecipeId = recipe.RecipeId });
-        _db.IngredientRecipe.Add(new IngredientRecipe() { IngredientId = IngredientId2, RecipeId = recipe.RecipeId });
+        _db.IngredientRecipes.Add(new IngredientRecipe() { IngredientId = IngredientId1, RecipeId = recipe.RecipeId });
+        _db.IngredientRecipes.Add(new IngredientRecipe() { IngredientId = IngredientId2, RecipeId = recipe.RecipeId });
       }
       _db.SaveChanges();
       return RedirectToAction("Index");
@@ -84,9 +84,9 @@ namespace RecipeBox.Controllers
       recipe.User = currentUser;
       _db.Recipes.Add(recipe);
       _db.SaveChanges();
-      if (IngredientId1 != 0 && IngredientId2 != 0 && IngredientId3 != 0)
+      if (IngredientId1 != 0)
       {
-        _db.IngredientRecipe.Add(new IngredientRecipe() { IngredientId = IngredientId1, RecipeId = recipe.RecipeId });
+        _db.IngredientRecipes.Add(new IngredientRecipe() { IngredientId = IngredientId1, RecipeId = recipe.RecipeId });
       }
       _db.SaveChanges();
       return RedirectToAction("Index");
