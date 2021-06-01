@@ -6,9 +6,9 @@ namespace RecipeBox.Models
   {
     public Ingredient()
     {
-      this.JoinIR = new HashSet<IngredientRecipie>();
+      this.JoinIR = new HashSet<IngredientRecipe>();
     }
-    public int IngredientsID {get; set;}
+    public int IngredientId {get; set;}
     public string Name {get; set;}
     public virtual ApplicationUser User {get; set;}
     public virtual ICollection<IngredientRecipe> JoinIR {get; set;}
