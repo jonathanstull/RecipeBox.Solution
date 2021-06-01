@@ -111,6 +111,27 @@ namespace RecipeBox.Controllers
       return View(thisRecipe);
     }
 
-    // Next up: Edit POST route!
+    [HttpPost]
+    public ActionResult Edit(Recipe recipe, int IngredientId, int RatingId)
+    {
+      if (IngredientId != 0 && RatingId != 0)
+      {
+        _db.IngredientRecipes.Add(new IngredientRecipe() { IngredientId = IngredientId, RecipeId = recipe.RecipeId });
+        _db.RatingRecipes.Add(new RatingRecipe() { RatingId = RatingId, RecipeId = recipe.RecipeId });
+      }
+      else if (IngredientId != 0 && RatingId < 1)
+      {
+        _db.IngredientRecipes.Add(new IngredientRecipe() { IngredientId = IngredientId, RecipeId = recipe.RecipeId });
+      }
+      else if (IngredientId < 1 && RatingId != 0)
+      {
+        _db.RatingRecipes.Add(new RatingRecipe() { RatingId = RatingId, RecipeId = recipe.RecipeId });
+      }
+      _db.Entry(recipe).State = EntityState.Modified;
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+
   }
 }
