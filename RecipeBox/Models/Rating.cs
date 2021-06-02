@@ -4,8 +4,8 @@ namespace RecipeBox.Models
 {
   public class Rating
   {
-    public int RatingId;
-    public int LucyStar;
+    public int RatingId { get; set; }
+    public int LucyStar { get; set; }
 
     public Rating()
     {

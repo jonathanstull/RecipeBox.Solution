@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
@@ -17,9 +16,9 @@ namespace RecipeBox.Controllers
   {
     private readonly RecipeBoxContext _db;
     private readonly UserManager<ApplicationUser> _userManager;
-    public IngredientsController(UserManager<ApplicationUser> _userManager, RecipeBoxContext db)
+    public IngredientsController(UserManager<ApplicationUser> userManager, RecipeBoxContext db)
     {
-      // _userManager = userManager;
+      _userManager = userManager;
       _db = db;
     }
     public async Task<ActionResult> Index()
@@ -35,21 +34,21 @@ namespace RecipeBox.Controllers
       return View();
     }
     [HttpPost]
-    public async Task<ActionResult> Create (Ingredient ingredient, int RecipeId)
+    public async Task<ActionResult> Create(Ingredient ingredient, int RecipeId)
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        var currentUser = await _userManager.FindByIdAsync(userId);
-        ingredient.User = currentUser;
-        _db.Ingredients.Add(ingredient);
-        _db.SaveChanges();
-        if (RecipeId != 0)
-        {
-            _db.IngredientRecipes.Add(new IngredientRecipe() { RecipeId = RecipeId, IngredientId = ingredient.IngredientId });
-        }
-        _db.SaveChanges();
-        return RedirectToAction("Index");
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      ingredient.User = currentUser;
+      _db.Ingredients.Add(ingredient);
+      _db.SaveChanges();
+      if (RecipeId != 0)
+      {
+        _db.IngredientRecipes.Add(new IngredientRecipe() { RecipeId = RecipeId, IngredientId = ingredient.IngredientId });
+      }
+      _db.SaveChanges();
+      return RedirectToAction("Index");
     }
-      public ActionResult Details(int id)
+    public ActionResult Details(int id)
     {
       var thisIngredient = _db.Ingredients
       .Include(ingredient => ingredient.JoinIR)
@@ -68,13 +67,13 @@ namespace RecipeBox.Controllers
     {
       if (RecipeId != 0)
       {
-        _db.IngredientRecipes.Add(new IngredientRecipe() {RecipeId = RecipeId, IngredientId = ingredient.IngredientId});
+        _db.IngredientRecipes.Add(new IngredientRecipe() { RecipeId = RecipeId, IngredientId = ingredient.IngredientId });
       }
       _db.Entry(ingredient).State = EntityState.Modified;
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
-    
+
     public ActionResult Delete(int id)
     {
       var thisIngredient = _db.Ingredients.FirstOrDefault(ingredient => ingredient.IngredientId == id);

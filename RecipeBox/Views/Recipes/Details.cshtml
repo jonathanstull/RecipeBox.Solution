@@ -1,0 +1,32 @@
+@{ Layout = "_Layout"; }
+
+@model RecipeBox.Models.Recipe
+
+<h2>Recipe Details</h2>
+
+<h3>@Html.DisplayNameFor(model => model.Title): @Html.DisplayFor(model => model.Title)</h3>
+
+@if (@Model.JoinIR.Count == 0)
+{
+  <p>This recipe isn't associated with any ingredient categories.</p>
+}
+else
+{
+  <h3>This recipe is connected with:</h3>
+  <ul>
+  @foreach (var join in Model.JoinIR)
+  {
+    <li>@join.Ingredient.Name</li>
+    @using (Html.BeginForm())
+    {
+      @Html.Hidden("joinId", @join.IngredientRecipeId)
+      <input type="submit" value="Delete" />
+    }
+  }
+  </ul>
+}
+
+<p>@Html.ActionLink("Add an ingredient category", "AddIngredient", new { id = Model.RecipeId })</p>
+<p>@Html.ActionLink("Back to recipes", "Index")</p>
+<p>@Html.ActionLink("Edit recipe", "Edit", new { id = Model.RecipeId })</p>
+<p>@Html.ActionLink("Delete recipe", "Delete", new { id = Model.RecipeId })</p>

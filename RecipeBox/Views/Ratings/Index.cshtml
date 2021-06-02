@@ -1,0 +1,26 @@
+@{
+  Layout = "_Layout";
+}
+
+@using RecipeBox.Models;
+@model IEnumerable<RecipeBox.Models.Rating>
+
+<h1>Ratings for @User.Identity.Name</h1>
+
+@* @if (Model.Any())
+{
+  <ul>
+    @foreach (Rating rating in Model)
+    {
+      <li>@Html.ActionLink($"{rating.LucyStar}", "Details", new { id = rating.RatingId })</li>
+    }
+  </ul>
+}
+else
+{
+  <h3>No ratings have been added yet!</h3>
+} *@
+
+<p>@Html.ActionLink("Add new rating", "Create")</p>
+
+<p>@Html.ActionLink("Home", "Index", "Home")</p>
