@@ -23,10 +23,10 @@
   @Html.EditorFor(model => model.Course)
 
   @Html.LabelFor(model => model.PrepDate)
-  @Html.EditorFor(model => model.PrepDate)
+  @Html.EditorFor(model => model.PrepDate, new { @type = "date"})
 
   @Html.LabelFor(model => model.PrepTime)
-  @Html.EditorFor(model => model.PrepTime)
+  @Html.EditorFor(model => model.PrepTime, new { @type = "number"})
 
   <input type="submit" value="Update recipe" />
 }

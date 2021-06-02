@@ -20,10 +20,10 @@
   @Html.TextBoxFor(model => model.Course, new {@class = "form-control", type="text", required="text"})
 
   @Html.LabelFor(model => model.PrepDate)
-  @Html.TextBoxFor(model => model.PrepDate)
+  @Html.TextBoxFor(model => model.PrepDate, new {@type = "date"})
 
   @Html.LabelFor(model => model.PrepTime)
-  @Html.TextBoxFor(model => model.PrepTime, new {@class = "form-control", type="text", required="text"})
-  <input type="submit" value="Add new category" />
+  @Html.TextBoxFor(model => model.PrepTime, new {@class = "form-control", type="number", required="text"})
+  <input type="submit" value="Add new recipe" />
 }
-<p>@Html.ActionLink("Show all categories", "Index")</p>
+<p>@Html.ActionLink("Show all recipes", "Index")</p>

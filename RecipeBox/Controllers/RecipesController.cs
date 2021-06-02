@@ -76,7 +76,7 @@ namespace RecipeBox.Controllers
 
     // Overload with one ingredient argument
     [HttpPost]
-    public async Task<ActionResult> CreateOne(Recipe recipe, int IngredientId1)
+    public async Task<ActionResult> Create(Recipe recipe, int IngredientId1)
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
