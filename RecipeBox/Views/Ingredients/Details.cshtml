@@ -4,7 +4,7 @@
 
 @model RecipeBox.Models.Ingredient
 
-<h2>Ingregient Details</h2>
+<h2>Ingredient Details</h2>
 <hr />
 <h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
 
@@ -27,6 +27,7 @@ else
     }
   </ul>
 }
+
 
 <p>@Html.ActionLink("Add a Recipe", "AddRecipe", new { id = Model.IngredientId })</p>
 

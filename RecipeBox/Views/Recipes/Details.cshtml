@@ -5,6 +5,8 @@
 <h2>Recipe Details</h2>
 
 <h3>@Html.DisplayNameFor(model => model.Title): @Html.DisplayFor(model => model.Title)</h3>
+<h3>@Html.DisplayNameFor(model => model.Course): @Html.DisplayFor(model => model.Course)</h3>
+<h3>@Html.DisplayNameFor(model => model.Style): @Html.DisplayFor(model => model.Style)</h3>
 
 @if (@Model.JoinIR.Count == 0)
 {
@@ -25,7 +27,7 @@ else
   }
   </ul>
 }
-
+@* <p>@Html.ActionLink("Add an ingredient to this recipe", "AddIngredient", "Recipes", new { id = Model.JoinIR.IngredientId })</p> *@
 <p>@Html.ActionLink("Add an ingredient category", "AddIngredient", new { id = Model.RecipeId })</p>
 <p>@Html.ActionLink("Back to recipes", "Index")</p>
 <p>@Html.ActionLink("Edit recipe", "Edit", new { id = Model.RecipeId })</p>
